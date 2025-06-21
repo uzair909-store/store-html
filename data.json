@@ -10,21 +10,25 @@
     "image": "https://i.ibb.co/PZKnBZ0B/BGA-Flux-Paste.webp",
     "title": "Flux Paste",
     "price": "Rs. 250",
-    "tag": "New"
+    "tag": "New",
+    "phone": "923000000001"
   },
   {
     "image": "https://i.ibb.co/HDV5trcZ/Jumper-Wire.webp",
     "title": "Jumper Wire",
-    "price": "Rs. 80"
+    "price": "Rs. 80",
+    "phone": "923000000001"
   },
   {
     "image": "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
     "title": "Classic Makeup",
-    "price": "Rs. 80"
+    "price": "Rs. 80",
+    "phone": "923000000001"
   },
   {
     "image": "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
     "title": "Rose Makeup",
-    "price": "Rs. 80"
+    "price": "Rs. 80",
+    "phone": "923000000001"
   }
 ]
