@@ -1,19 +1,19 @@
 [
   {
-    "title": "Test Chicken",
-    "price": "600 PKR",
-    "image": "https://i.ibb.co/gM8XTs16/sexy-nude-selfie-boy-698x1024.webp"
+    "image": "https://i.ibb.co/Xtq2BGy/zinger.jpg",
+    "title": "Zinger Burger",
+    "price": "Rs. 350",
     "tag": "Hot"
   },
   {
-    "title": "Test Shirt",
-    "price": "900 PKR",
-    "image": "https://i.ibb.co/xqyKVfc1/image-4.jpg"
+    "image": "https://i.ibb.co/q0zDFHx/biryani.jpg",
+    "title": "Chicken Biryani",
+    "price": "Rs. 250",
     "tag": "New"
   },
   {
-    "title": "Test Shirt",
-    "price": "900 PKR",
-    "image": "https://i.ibb.co/xqyKVfc1/image-4.jpg"
-   }
+    "image": "https://i.ibb.co/LJYrKvp/cold-drink.jpg",
+    "title": "Cold Drink",
+    "price": "Rs. 80"
+  }
 ]
