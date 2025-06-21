@@ -196,7 +196,7 @@
 
   <script>
     const jsonURL = "https://raw.githubusercontent.com/uzair909-store/store-html/refs/heads/main/data.json";
-    const whatsappNumber = "923293027031";
+    const whatsappNumber = "923001234567";
     let products = [];
 
     function loadProducts() {
@@ -212,23 +212,25 @@
     }
 
     function renderProducts(data) {
-      const store = document.getElementById("store");
-      store.innerHTML = "";
-      data.forEach(item => {
-        const label = item.tag ? `<span class="label">${item.tag}</span>` : "";
-        const box = document.createElement("div");
-        box.className = "product";
-        box.innerHTML = `
-          <img src="${item.image}" alt="${item.title}">
-          <h2>${item.title} ${label}</h2>
-          <div class="price">${item.price}</div>
-          <a href="https://wa.me/${whatsappNumber}?text=Main%20${encodeURIComponent(item.title)}%20lenay%20mein%20interested%20hoon" target="_blank">
-            <button>Contact Me</button>
-          </a>
-        `;
-        store.appendChild(box);
-      });
-    }
+  const store = document.getElementById("store");
+  store.innerHTML = "";
+  data.forEach(item => {
+    const label = item.tag ? `<span class="label">${item.tag}</span>` : "";
+    const phone = item.phone || "923293027031"; // default number if missing
+
+    const box = document.createElement("div");
+    box.className = "product";
+    box.innerHTML = `
+      <img src="${item.image}" alt="${item.title}">
+      <h2>${item.title} ${label}</h2>
+      <div class="price">${item.price}</div>
+      <a href="https://wa.me/${phone}?text=Main%20${encodeURIComponent(item.title)}%20lenay%20mein%20interested%20hoon" target="_blank">
+        <button>Contact Me</button>
+      </a>
+    `;
+    store.appendChild(box);
+  });
+}
 
     function toggleMode() {
       document.body.classList.toggle("light");
