@@ -16,14 +16,17 @@
       --btn-light: #007bff;
     }
 
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
       font-family: "Segoe UI", sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       background: var(--bg-dark);
       color: var(--text-dark);
       transition: all 0.3s ease;
@@ -37,7 +40,8 @@
     .container {
       width: 100%;
       max-width: 600px;
-      height: 90vh;
+      margin: 0 auto;
+      height: 100vh;
       overflow-y: auto;
       background: rgba(0, 0, 0, 0.4);
       border-radius: 12px;
@@ -118,23 +122,38 @@
       background: var(--btn-light);
     }
 
-    .toggle-btn {
+    .toggle-btn,
+    .refresh-btn {
       position: fixed;
       top: 10px;
-      right: 10px;
-      background: #fff3;
-      border: none;
       padding: 8px 12px;
+      border: none;
       border-radius: 6px;
-      cursor: pointer;
-      color: white;
       font-weight: bold;
       z-index: 999;
+      cursor: pointer;
+    }
+
+    .toggle-btn {
+      right: 10px;
+      background: #fff3;
+      color: white;
+    }
+
+    .refresh-btn {
+      left: 10px;
+      background: #fff3;
+      color: white;
     }
 
     body.light .toggle-btn {
       background: #0002;
-      color: #000;
+      color: black;
+    }
+
+    body.light .refresh-btn {
+      background: #0002;
+      color: black;
     }
 
     .label {
@@ -160,26 +179,7 @@
       background: #888;
       border-radius: 4px;
     }
-  
-.refresh-btn {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  background: #fff3;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  z-index: 999;
-}
-
-body.light .refresh-btn {
-  background: #0002;
-  color: #000;
-}
-   </style>
+  </style>
 </head>
 <body>
 
@@ -195,16 +195,16 @@ body.light .refresh-btn {
   </div>
 
   <script>
-    const jsonURL = "https://raw.githubusercontent.com/uzair909-store/store-html/refs/heads/main/data.json"; // 🔁 Update your link here
-    const whatsappNumber = "923001234567"; // ✅ Your WhatsApp number
+    const jsonURL = "https://raw.githubusercontent.com/uzair909-store/store-html/main/data.json";
+    const whatsappNumber = "923001234567";
     let products = [];
 
     function loadProducts() {
       fetch(jsonURL)
         .then(res => res.json())
         .then(data => {
-          products = data.reverse(); // Newest first
-          filterProducts(); // Re-filter
+          products = data.reverse();
+          filterProducts();
         })
         .catch(() => {
           document.getElementById("store").innerHTML = `<p style="color:red">⚠️ Unable to load products.</p>`;
@@ -240,8 +240,8 @@ body.light .refresh-btn {
       renderProducts(filtered);
     }
 
-    loadProducts(); // Initial load
-    setInterval(loadProducts, 20000); // 🔄 Refresh every 20 seconds
+    loadProducts();
+    setInterval(loadProducts, 20000);
   </script>
 
 </body>
