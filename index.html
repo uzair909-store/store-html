@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Online Store</title>
   <style>
     :root {
@@ -29,7 +29,6 @@
       font-family: "Segoe UI", sans-serif;
       background: var(--bg-dark);
       color: var(--text-dark);
-      transition: all 0.3s ease;
     }
 
     body.light {
@@ -46,7 +45,6 @@
       background: rgba(0, 0, 0, 0.4);
       border-radius: 12px;
       padding: 1rem;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
 
     .store-title {
@@ -56,11 +54,6 @@
       font-weight: bold;
     }
 
-    .search-bar {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-
     .search-bar input {
       width: 100%;
       padding: 10px;
@@ -68,6 +61,7 @@
       border: none;
       outline: none;
       font-size: 15px;
+      margin-bottom: 1rem;
     }
 
     .product {
@@ -76,7 +70,6 @@
       padding: 10px;
       margin-bottom: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
     }
 
     body.light .product {
@@ -88,7 +81,6 @@
     }
 
     .product img {
-      width: 100%;
       border-radius: 8px;
     }
 
@@ -115,11 +107,6 @@
       border-radius: 8px;
       color: white;
       cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    body.light .product a button {
-      background: var(--btn-light);
     }
 
     .toggle-btn,
@@ -146,16 +133,6 @@
       color: white;
     }
 
-    body.light .toggle-btn {
-      background: #0002;
-      color: black;
-    }
-
-    body.light .refresh-btn {
-      background: #0002;
-      color: black;
-    }
-
     .label {
       background: crimson;
       color: white;
@@ -179,6 +156,34 @@
       background: #888;
       border-radius: 4px;
     }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    #lightboxLeft, #lightboxRight {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 30%;
+      cursor: pointer;
+    }
+
+    #lightboxLeft { left: 0; }
+    #lightboxRight { right: 0; }
   </style>
 </head>
 <body>
@@ -194,10 +199,20 @@
     <div id="store"></div>
   </div>
 
+  <!-- Lightbox Viewer -->
+  <div id="lightbox">
+    <img id="lightboxImage" src="">
+    <div id="lightboxLeft"></div>
+    <div id="lightboxRight"></div>
+  </div>
+
   <script>
     const jsonURL = "https://raw.githubusercontent.com/uzair909-store/store-html/refs/heads/main/data.json";
     const whatsappNumber = "923001234567";
     let products = [];
+    let productImagesMap = [];
+    let currentImages = [];
+    let currentIndex = 0;
 
     function loadProducts() {
       fetch(jsonURL)
@@ -212,25 +227,41 @@
     }
 
     function renderProducts(data) {
-  const store = document.getElementById("store");
-  store.innerHTML = "";
-  data.forEach(item => {
-    const label = item.tag ? `<span class="label">${item.tag}</span>` : "";
-    const phone = item.phone || "923293027031"; // default number if missing
+      const store = document.getElementById("store");
+      store.innerHTML = "";
+      productImagesMap = [];
 
-    const box = document.createElement("div");
-    box.className = "product";
-    box.innerHTML = `
-      <img src="${item.image}" alt="${item.title}">
-      <h2>${item.title} ${label}</h2>
-      <div class="price">${item.price}</div>
-      <a href="https://wa.me/${phone}?text=Main%20${encodeURIComponent(item.title)}%20lenay%20mein%20interested%20hoon" target="_blank">
-        <button>Contact Me</button>
-      </a>
-    `;
-    store.appendChild(box);
-  });
-}
+      data.forEach(item => {
+        const label = item.tag ? `<span class="label">${item.tag}</span>` : "";
+        const phone = item.phone || "923293027031";
+
+        let imagesHTML = "";
+
+        if (item.images && Array.isArray(item.images)) {
+          let imageGroupIndex = productImagesMap.length;
+          productImagesMap.push(item.images);
+          imagesHTML = `<div style="display:flex; gap:8px; overflow-x:auto;">` +
+            item.images.map((img, index) => `
+              <img src="${img}" alt="${item.title}" style="max-width:100px; border-radius:6px; cursor:pointer;" onclick="showLightbox(${imageGroupIndex}, ${index})">
+            `).join('') +
+            `</div>`;
+        } else {
+          imagesHTML = `<img src="${item.image}" alt="${item.title}" style="width:100%; max-height:300px; object-fit:cover; cursor:pointer;" onclick="showLightboxFromSingle('${item.image}')">`;
+        }
+
+        const box = document.createElement("div");
+        box.className = "product";
+        box.innerHTML = `
+          ${imagesHTML}
+          <h2>${item.title} ${label}</h2>
+          <div class="price">${item.price}</div>
+          <a href="https://wa.me/${phone}?text=Main%20${encodeURIComponent(item.title)}%20lenay%20mein%20interested%20hoon" target="_blank">
+            <button>Contact Me</button>
+          </a>
+        `;
+        store.appendChild(box);
+      });
+    }
 
     function toggleMode() {
       document.body.classList.toggle("light");
@@ -242,9 +273,40 @@
       renderProducts(filtered);
     }
 
+    function showLightbox(groupIndex, index) {
+      currentImages = productImagesMap[groupIndex];
+      currentIndex = index;
+      document.getElementById("lightbox").style.display = "flex";
+      document.getElementById("lightboxImage").src = currentImages[currentIndex];
+    }
+
+    function showLightboxFromSingle(url) {
+      currentImages = [url];
+      currentIndex = 0;
+      document.getElementById("lightbox").style.display = "flex";
+      document.getElementById("lightboxImage").src = url;
+    }
+
+    function hideLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+
+    document.getElementById("lightboxLeft").onclick = () => {
+      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      document.getElementById("lightboxImage").src = currentImages[currentIndex];
+    };
+
+    document.getElementById("lightboxRight").onclick = () => {
+      currentIndex = (currentIndex + 1) % currentImages.length;
+      document.getElementById("lightboxImage").src = currentImages[currentIndex];
+    };
+
+    document.getElementById("lightbox").addEventListener("click", hideLightbox);
+    document.getElementById("lightboxImage").addEventListener("click", e => e.stopPropagation());
+
     loadProducts();
     setInterval(loadProducts, 20000);
   </script>
 
 </body>
-</html>
+  </html>
