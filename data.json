@@ -26,10 +26,12 @@
     "phone": "923000000001"
   },
   {
-    "image": "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
-    "image": "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
-    "image": "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
-    "image": "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
+    "images": [
+    "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
+    "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
+    "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp",
+    "https://i.ibb.co/Zp4fVgn8/FB-IMG-17474622881581801.webp"
+    ],
     "title": "Rose Makeup",
     "price": "Rs. 80",
     "phone": "923000000001"
