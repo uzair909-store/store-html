@@ -13,11 +13,11 @@
       --card-dark: #1f1f1f;
       --card-light: #fff;
       --btn-dark: #25D366;
-      --btn-light: #007bff;
     }
 
     * {
       box-sizing: border-box;
+      max-width: 100%;
     }
 
     html, body {
@@ -45,14 +45,34 @@
       background: rgba(0, 0, 0, 0.4);
       border-radius: 12px;
       padding: 1rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .container::-webkit-scrollbar {
+      width: 0;
     }
 
     .store-title {
       text-align: center;
       font-size: 22px;
-      margin-bottom: 1rem;
       font-weight: bold;
+      margin-bottom: 0.5rem;
     }
+
+    /* Headline styles */
+    .headline {
+    background: crimson;
+    color: white;
+    padding: 0px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.4;
+  }
 
     .search-bar input {
       width: 100%;
@@ -74,10 +94,6 @@
 
     body.light .product {
       background: var(--card-light);
-    }
-
-    .product:hover {
-      transform: scale(1.01);
     }
 
     .product img {
@@ -148,13 +164,16 @@
       to { transform: scale(1.1); }
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
+    .image-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
     }
 
-    ::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
+    .image-row::-webkit-scrollbar {
+      height: 0;
     }
 
     /* Lightbox */
@@ -188,18 +207,20 @@
 </head>
 <body>
 
-  <button class="toggle-btn" onclick="toggleMode()">🌗</button>
-  <button class="refresh-btn" onclick="loadProducts()">⟳ Refresh</button>
+  <button class="toggle-btn" onclick="toggleMode()">ЁЯМЧ</button>
+  <button class="refresh-btn" onclick="loadProducts()">тЯ│ Refresh</button>
 
   <div class="container">
-    <div class="store-title">Online Store</div>
+    <div class="store-title">Uzair Store</div>
+    <div class="headline">
+      <div class="headline" id="headline">Loading update...</div>
+    </div>
     <div class="search-bar">
       <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Search product...">
     </div>
     <div id="store"></div>
   </div>
 
-  <!-- Lightbox Viewer -->
   <div id="lightbox">
     <img id="lightboxImage" src="">
     <div id="lightboxLeft"></div>
@@ -208,11 +229,33 @@
 
   <script>
     const jsonURL = "https://raw.githubusercontent.com/uzair909-store/store-html/refs/heads/main/data.json";
-    const whatsappNumber = "923001234567";
+    const headURL = "https://raw.githubusercontent.com/uzair909-store/store-html/refs/heads/main/head.json";
     let products = [];
     let productImagesMap = [];
     let currentImages = [];
     let currentIndex = 0;
+
+    function animateHeadline() {
+      const elem = document.getElementById("headline");
+      const parent = elem.parentElement;
+      const textWidth = elem.offsetWidth;
+      const parentWidth = parent.offsetWidth;
+      const distance = textWidth + parentWidth;
+      const duration = distance / 50; // speed: 50px/sec
+      elem.style.animation = `scroll ${duration}s linear infinite`;
+    }
+
+    function loadHeadline() {
+  fetch("https://raw.githubusercontent.com/uzair909-store/store-html/refs/heads/main/head.json")
+    .then(res => res.json())
+    .then(data => {
+      const text = data.headline || "ЁЯУв Welcome to our store!";
+      document.getElementById("headline").textContent = text;
+    })
+    .catch(() => {
+      document.getElementById("headline").textContent = "тЪая╕П Couldn't load update.";
+    });
+}
 
     function loadProducts() {
       fetch(jsonURL)
@@ -222,7 +265,7 @@
           filterProducts();
         })
         .catch(() => {
-          document.getElementById("store").innerHTML = `<p style="color:red">⚠️ Unable to load products.</p>`;
+          document.getElementById("store").innerHTML = `<p style="color:red">тЪая╕П Unable to load products.</p>`;
         });
     }
 
@@ -240,7 +283,7 @@
         if (item.images && Array.isArray(item.images)) {
           let imageGroupIndex = productImagesMap.length;
           productImagesMap.push(item.images);
-          imagesHTML = `<div style="display:flex; gap:8px; overflow-x:auto;">` +
+          imagesHTML = `<div class="image-row">` +
             item.images.map((img, index) => `
               <img src="${img}" alt="${item.title}" style="max-width:100px; border-radius:6px; cursor:pointer;" onclick="showLightbox(${imageGroupIndex}, ${index})">
             `).join('') +
@@ -304,9 +347,10 @@
     document.getElementById("lightbox").addEventListener("click", hideLightbox);
     document.getElementById("lightboxImage").addEventListener("click", e => e.stopPropagation());
 
+    loadHeadline();
     loadProducts();
     setInterval(loadProducts, 20000);
   </script>
 
 </body>
-  </html>
+</html>
