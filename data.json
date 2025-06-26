@@ -1,30 +1,30 @@
 [
   {
-    "image": "https://www.organicbloom.pk/cdn/shop/files/01-03_bb17b4bd-42be-4221-b7b5-dea919eab510.jpg?v=1706531920",
+    "image": "https://i.imgur.com/LwfZ052.jpeg",
     "title": "Battery Booster",
-    "price": "Rs. 350",
+    "price": "Rs. 3500",
     "tag": "Hot",
-    "phone": "+923000000001"
+    "phone": "+923293027031"
   },
   {
     "image": "https://i.ibb.co/PZKnBZ0B/BGA-Flux-Paste.webp",
     "title": "Flux Paste",
-    "price": "Rs. 250",
+    "price": "Rs. 700",
     "tag": "New",
-    "phone": "923000000001"
+    "phone": "+923293027031"
   },
   {
     "image": "https://i.ibb.co/HDV5trcZ/Jumper-Wire.webp",
     "title": "Jumper Wire",
-    "price": "Rs. 80",
-    "phone": "923000000001"
+    "price": "Rs. 180",
+    "phone": "+923293027031"
   },
   {
     "image": "https://i.imgur.com/jOWoJW4.jpeg",
     "title": "Digital Multimeter",
-    "price": "Rs. ???",
+    "price": "Rs. 2500",
     "tag": "New",
-    "phone": "923293027031"
+    "phone": "+923293027031"
   },
   {
     "images": [
@@ -38,8 +38,8 @@
       "https://i.imgur.com/kT1wrNi.jpeg"
     ],
     "title": "Latest Tools",
-    "price": "Rs. ???",
+    "price": "Rs. Unknown",
     "tag": "New",
-    "phone": "923293027031"
+    "phone": "+923293027031"
   }
 ]
